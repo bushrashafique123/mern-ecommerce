@@ -1,0 +1,66 @@
+import { useState, useEffect, useCallback } from "react";
+import { apiRequest } from "@/services/api";
+
+export function useUsers() {
+  const [users, setUsers] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const [page, setPage] = useState(1);
+  const [limit] = useState(10);
+  const [totalPages, setTotalPages] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("createdAt");
+  const [order, setOrder] = useState("desc");
+
+  const fetchUsers = useCallback(async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await apiRequest({
+        method: "get",
+        endpoint: `/auth/users/users?page=${page}&limit=${limit}&search=${search}&sortBy=${sortBy}&order=${order}`,
+        useToken: true,
+      });
+
+      if (response?.users) {
+        setUsers(response.users);
+        setTotal(response.total || 0);
+        setTotalPages(response.totalPages || 1);
+      } else {
+        setError("Invalid response from server.");
+        setUsers([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch users.");
+      setUsers([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [page, limit, search, sortBy, order]);
+
+  useEffect(() => {
+    fetchUsers();
+  }, [fetchUsers]);
+
+  return {
+    users,
+    loading,
+    error,
+    page,
+    setPage,
+    totalPages,
+    total,
+    search,
+    setSearch,
+    sortBy,
+    setSortBy,
+    order,
+    setOrder,
+    refetch: fetchUsers,
+  };
+}
