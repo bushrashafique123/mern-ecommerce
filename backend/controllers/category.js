@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
-import Category from '../models/category.js' ; // Assuming the model is in the models folder
+import Category from '../models/category.js' ; 
 
-// Create a new category
+
 export let createCategory = async (req, res) => {
     try {
         const { name, description } = req.body;

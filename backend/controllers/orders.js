@@ -1,9 +1,6 @@
 import Order from "../models/orders.js";
 import stripe from "../models/stripe.js";
 
-//////////////////////////////////////////////////////
-// ✅ CREATE ORDER (Before Stripe Payment)
-//////////////////////////////////////////////////////
 export const createOrder = async (req, res) => {
   try {
     const { items } = req.body;
@@ -33,9 +30,6 @@ export const createOrder = async (req, res) => {
   }
 };
 
-//////////////////////////////////////////////////////
-// ✅ CREATE STRIPE CHECKOUT SESSION
-//////////////////////////////////////////////////////
 export const createCheckoutSession = async (req, res) => {
   try {
     const { orderId } = req.body;
@@ -69,9 +63,7 @@ export const createCheckoutSession = async (req, res) => {
   }
 };
 
-//////////////////////////////////////////////////////
-// ✅ STRIPE WEBHOOK (VERY IMPORTANT)
-//////////////////////////////////////////////////////
+
 export const stripeWebhook = async (req, res) => {
   const sig = req.headers["stripe-signature"];
 
@@ -99,9 +91,6 @@ export const stripeWebhook = async (req, res) => {
   res.json({ received: true });
 };
 
-//////////////////////////////////////////////////////
-// ✅ GET ALL ORDERS (Admin)
-//////////////////////////////////////////////////////
 export const getAllOrders = async (req, res) => {
   try {
     const {
@@ -145,9 +134,6 @@ export const getAllOrders = async (req, res) => {
   }
 };
 
-//////////////////////////////////////////////////////
-// ✅ GET SINGLE ORDER
-//////////////////////////////////////////////////////
 export const getSingleOrder = async (req, res) => {
   try {
     const order = await Order.findById(req.params.id).populate(
@@ -163,9 +149,7 @@ export const getSingleOrder = async (req, res) => {
   }
 };
 
-//////////////////////////////////////////////////////
-// ✅ UPDATE ORDER STATUS (Admin)
-//////////////////////////////////////////////////////
+
 export const updateOrderStatus = async (req, res) => {
   try {
     const { orderStatus } = req.body;
@@ -184,9 +168,7 @@ export const updateOrderStatus = async (req, res) => {
   }
 };
 
-//////////////////////////////////////////////////////
-// ✅ DELETE ORDER (Admin)
-//////////////////////////////////////////////////////
+
 export const deleteOrder = async (req, res) => {
   try {
     const order = await Order.findByIdAndDelete(req.params.id);

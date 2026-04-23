@@ -25,8 +25,6 @@ export let verifyToken = (req, res, next) => {
                     message: "Failed to authenticate token" 
                 });
             }
-            console.log('Token verified successfully:', decoded);
-            // Store full decoded user info in request
             req.user = decoded;
             next();
         });
@@ -39,7 +37,6 @@ export let verifyToken = (req, res, next) => {
 export const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
         try {
-            // Check if user exists and has admin role
             if (!req.user) {
                 return res.status(401).json({ message: "User not found in token" });
             }

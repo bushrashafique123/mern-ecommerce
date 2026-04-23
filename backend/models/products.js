@@ -13,21 +13,22 @@ const productsSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  categoryId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
-    required: true
-  },
+  stock: {
+  type: Number,
+  required: true,
+  default: 0,
+},
+categoryId: {
+  type: mongoose.Schema.Types.ObjectId,
+  ref: "Category",
+  required: true
+},
   image: String,
   rating: {
     type: Number,
     default: 0
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now
   }
-}, { timestamps: true });
+}, { timestamps: true })
 
-const Products = mongoose.model("products", productsSchema);
-export default Products;
+const Products = mongoose.model("products", productsSchema)
+export default Products

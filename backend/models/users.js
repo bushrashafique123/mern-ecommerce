@@ -16,11 +16,12 @@ const userSchema = mongoose.Schema({
         enum: ["admin", "user"],
         default: "user",
     },
+ 
     status: {
-        type: String,
-        enum: ["active", "inactive"],
-        default: "active",
-    },
+  type: String,
+  enum: ['pending', 'active', 'inactive'], // ✅ ADD pending
+  default: 'pending'
+},
     createdAt: {
         type: Date,
         default: Date.now,
@@ -43,7 +44,7 @@ const userSchema = mongoose.Schema({
     },
     otpExpiry: {
         type: Date,
-        default: null,
+       
     },
     resetPasswordToken: {
         type: String,

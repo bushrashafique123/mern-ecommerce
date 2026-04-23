@@ -2,15 +2,12 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 dotenv.config();
 
-export const dbConnect = () => {
-  mongoose
-  .connect(process.env.MONGODB_URI)
-
-
-  .then(() => {
+export const dbConnect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
     console.log("Mongodb connected successfully");
-  })
-  .catch((error) => {
+  } catch (error) {
     console.log("Mongodb connection failed:", error.message);
-  })
-}
+    process.exit(1); 
+  }
+};

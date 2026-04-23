@@ -8,13 +8,14 @@ import categoryRoutes from './routes/category.js';
 import usersRoutes from './routes/users.js';
 import orderRoutes from './routes/order.js'
 import { stripeWebhook } from "./controllers/orders.js";
+import cartRoutes from './routes/cart.js';
 import dotenv from 'dotenv';
 
 
 
 var corsOptions = {
-  origin: process.env.WEBAPP_URL, 
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  origin: process.env.WEBAPP_URL,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 };
@@ -33,13 +34,19 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors(corsOptions ));
 app.use(morgan("common"));
-dbConnect();
 
-app.use('/api/products', productsRoutes); // Register products routes
-app.use('/api/categories', categoryRoutes); // Add category routes
-app.use('/auth/users', usersRoutes); // Add users routes
+app.use('/api/products', productsRoutes); 
+app.use('/api/categories', categoryRoutes); 
+app.use('/auth/users', usersRoutes); 
 app.use("/api/orders", orderRoutes);
+app.use("/api/cart", cartRoutes);
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+const startServer = async () => {
+  await dbConnect();
+
+  app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
+  });
+};
+
+startServer();

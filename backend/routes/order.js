@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.post("/", verifyToken, createOrder);
 router.post("/checkout", verifyToken, createCheckoutSession);
-router.post("/webhook", stripeWebhook); // webhook route
+router.post("/webhook", stripeWebhook); 
 
 router.get("/", verifyTokenAndAdmin, getAllOrders);
 router.get("/:id", verifyToken, getSingleOrder);
