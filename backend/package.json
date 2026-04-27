@@ -17,6 +17,7 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.0",
+    "http": "^0.0.1-security",
     "jsonwebtoken": "^9.0.3",
     "mongodb": "^6.16.0",
     "mongoose": "^8.13.2",
@@ -25,6 +26,7 @@
     "nodemailer": "^6.10.1",
     "nodemailer-express-handlebars": "^7.0.0",
     "react-dom": "^19.2.5",
+    "serverless": "^4.34.0",
     "stripe": "^20.3.1"
   }
 }
