@@ -6,12 +6,13 @@
   "author": "",
   "type": "module",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+ "scripts": {
+  "start": "node index.js",
+  "test": "echo \"Error: no test specified\" && exit 1",
+  "build": "echo \"Build complete\""
+},
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^2.9.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
