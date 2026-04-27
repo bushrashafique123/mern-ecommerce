@@ -1,9 +1,6 @@
 {
   "version": 2,
   "buildCommand": "npm ci --omit=dev",
-  "env": {
-    "NODE_ENV": "production"
-  },
   "builds": [
     {
       "src": "index.js",
@@ -15,11 +12,5 @@
       "src": "/(.*)",
       "dest": "index.js"
     }
-  ],
-  "functions": {
-    "index.js": {
-      "maxDuration": 30,
-      "memory": 1024
-    }
-  }
+  ]
 }
