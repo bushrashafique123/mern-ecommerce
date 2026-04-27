@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "buildCommand": "npm install",
+  "buildCommand": "npm ci --omit=dev",
   "env": {
     "NODE_ENV": "production"
   },
