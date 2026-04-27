@@ -20,7 +20,26 @@ const corsOptions = {
   methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
-}; 
+};
+
+// Database connection flag
+let dbConnected = false;
+
+// Middleware to connect database on first request
+const connectDatabase = async (req, res, next) => {
+  if (!dbConnected && process.env.NODE_ENV === 'production') {
+    try {
+      await dbConnect();
+      dbConnected = true;
+    } catch (error) {
+      console.error('Database connection error:', error);
+      return res.status(500).json({ error: 'Database connection failed' });
+    }
+  }
+  next();
+};
+
+app.use(connectDatabase);
 
 // Webhook must be before other middleware for raw body
 app.post(
@@ -44,7 +63,7 @@ app.use("/api/cart", cartRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.status(200).json({ status: 'OK', message: 'Server is running' });
+  res.status(200).json({ status: 'OK', message: 'Server is running', env: process.env.NODE_ENV });
 });
 
 // Error handling middleware
@@ -60,6 +79,7 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   try {
     await dbConnect();
+    dbConnected = true;
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });
