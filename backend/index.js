@@ -14,12 +14,21 @@ import cartRoutes from './routes/cart.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = [
-  "http://localhost:5173",
-  "http://localhost:3000",
-  process.env.WEBAPP_URL,
-    process.env.CLIENT_URL
-];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+
+    if (
+      allowedOrigins.includes(origin) ||
+      origin.includes("vercel.app")  
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS not allowed"));
+    }
+  },
+  credentials: true,
+};
 
 const corsOptions = {
   origin: function (origin, callback) {
