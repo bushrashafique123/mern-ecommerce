@@ -42,13 +42,14 @@ let dbConnected = false;
 
 // Middleware to connect database on first request
 const connectDatabase = async (req, res, next) => {
-  if (!dbConnected && process.env.NODE_ENV === 'production') {
+  if (!dbConnected) {
     try {
       await dbConnect();
       dbConnected = true;
+      console.log("DB Connected");
     } catch (error) {
-      console.error('Database connection error:', error);
-      return res.status(500).json({ error: 'Database connection failed' });
+      console.error("Database connection error:", error);
+      return res.status(500).json({ error: "Database connection failed" });
     }
   }
   next();
