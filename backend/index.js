@@ -14,31 +14,24 @@ import cartRoutes from './routes/cart.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://mern-ecommerce-fzcs.vercel.app"
+];
+
 const corsOptions = {
   origin: function (origin, callback) {
     if (!origin) return callback(null, true);
 
     if (
       allowedOrigins.includes(origin) ||
-      origin.includes("vercel.app")  
+      origin.endsWith(".vercel.app") // safer than includes
     ) {
       callback(null, true);
     } else {
       callback(new Error("CORS not allowed"));
-    }
-  },
-  credentials: true,
-};
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    // allow requests with no origin (like Postman)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
-    } else {
-      return callback(new Error("CORS not allowed"), false);
     }
   },
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
